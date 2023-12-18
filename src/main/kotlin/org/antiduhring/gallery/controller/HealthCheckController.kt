@@ -8,6 +8,6 @@ class HealthCheckController {
 
     @GetMapping("health")
     fun health(): String {
-        return "OK"
+        return "OK FROM FEATURE BRANCH"
     }
 }
