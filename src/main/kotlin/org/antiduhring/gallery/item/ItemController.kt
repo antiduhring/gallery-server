@@ -14,4 +14,7 @@ class ItemController(private val itemsService: ItemService) {
 
     @GetMapping("${IMAGE_URL}/{id}")
     fun loadFile(@PathVariable id: Int) = itemsService.loadImage(id)
+
+    @GetMapping("/get")
+    fun get() = itemsService.get()
 }
