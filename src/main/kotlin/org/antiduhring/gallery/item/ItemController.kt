@@ -18,4 +18,9 @@ class ItemController(private val itemsService: ItemService) {
     fun loadFile(@PathVariable id: Int): ByteArray =
         itemsService.loadImage(id)
             .orElseThrow{ ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource") }
+
+    @DeleteMapping
+    fun clear() {
+        itemsService.clearAll()
+    }
 }

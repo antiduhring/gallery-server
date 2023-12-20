@@ -33,6 +33,13 @@ class ItemIdGenerator(private val mongoOperations: MongoOperations) {
         }
         return sequence.seq
     }
+    fun reset() {
+        mongoOperations.findAndModify(
+            query(where("_id").`is`(ITEMS_ID_SEQUENCE)),
+            Update().set("seq", 0),
+            options().returnNew(true),
+            Sequence::class.java)
+    }
 }
 
 interface ItemRepository: MongoRepository<ItemDocument, Int>

@@ -21,6 +21,12 @@ class ItemService(
     }
     fun loadImage(id: Int): Optional<ByteArray> = itemFileRepository.findById(id).map{it.file}
 
+    fun clearAll() {
+        itemRepository.deleteAll()
+        itemFileRepository.deleteAll()
+        itemIdGenerator.reset()
+    }
+
     private fun map(document: ItemDocument): Item =
         Item(id = document.id, name = document.name, imageUrl = "/$IMAGE_URL/${document.id}")
 }
