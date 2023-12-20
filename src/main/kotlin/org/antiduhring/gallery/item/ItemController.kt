@@ -1,7 +1,9 @@
 package org.antiduhring.gallery.item
 
 import org.springframework.core.io.Resource
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class ItemController(private val itemsService: ItemService) {
@@ -13,8 +15,7 @@ class ItemController(private val itemsService: ItemService) {
         itemsService.createItem(name, resource.contentAsByteArray)
 
     @GetMapping("${IMAGE_URL}/{id}")
-    fun loadFile(@PathVariable id: Int) = itemsService.loadImage(id)
-
-    @GetMapping("/get")
-    fun get() = itemsService.get()
+    fun loadFile(@PathVariable id: Int): ByteArray =
+        itemsService.loadImage(id)
+            .orElseThrow{ ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource") }
 }
